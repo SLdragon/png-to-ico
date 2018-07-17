@@ -3,8 +3,8 @@ const Jimp = require("jimp");
 
 // http://fileformats.wikia.com/wiki/Icon
 // the correct sizes are 256x256, 48x48, 32x32, 16x16
-const sizeList = [48, 32, 16];
-const err = new Error("Please give me an png image of 256x256 pixels.");
+const sizeList = [192, 128, 96, 64, 48, 32, 24, 16];
+const err = new Error("Please give me an png/jpg/bmp image.");
 err.code = "ESIZE";
 
 module.exports = function(filepath) {
@@ -12,7 +12,7 @@ module.exports = function(filepath) {
     .then(image => {
       const bitmap = image.bitmap;
       const size = bitmap.width;
-      if (image._originalMime !== Jimp.MIME_PNG || size !== bitmap.height) {
+      if (image._originalMime !== Jimp.MIME_PNG && image._originalMime !== Jimp.MIME_JPEG && image._originalMime !== Jimp.MIME_BMP) {
         throw err;
       }
       if (size !== 256) {
